@@ -261,7 +261,7 @@
 </div>
 <div class="flex items-center gap-1">
 <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
-<span class="font-label-sm text-label-sm text-tertiary font-bold">Amazon data</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">Open on Amazon</span>
 </div>
 </div>
 <div class="grid grid-cols-2 gap-space-sm">
@@ -477,9 +477,9 @@
 <div class="p-space-md rounded-xl bg-surface-container-low flex items-start gap-space-sm">
 <span class="material-symbols-outlined text-primary text-[24px] shrink-0 mt-0.5">verified_user</span>
 <div class="flex flex-col gap-1">
-<span class="font-label-md text-label-md text-on-surface font-bold">Verified Amazon India Associate Partner</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">Amazon India shopping links</span>
 <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-          ADMUS may analyze permitted Amazon product and price data. Prices and availability can change on Amazon.in. As an Amazon Associate, ADMUS earns from qualifying purchases at no additional cost to you.
+          ADMUS helps you discover products and continue to Amazon.in. Product prices and availability are shown by Amazon and can change. Qualifying purchases may earn ADMUS a commission.
         </p>
 </div>
 </div>
@@ -492,55 +492,87 @@
       e.stopPropagation();
     });
   });
-</script><div class="mt-auto px-margin py-space-md text-center"><p class="font-body-sm text-body-sm text-on-surface-variant opacity-75">As an Amazon Associate, ADMUS earns from qualifying purchases. Product prices &amp; availability are accurate as of date/time indicated.</p></div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]" data-active-classes="text-primary font-label-lg"><div class="flex justify-around items-center h-16 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center w-16 h-12 transition-colors gap-0.5 text-primary font-label-lg" data-path="home-discovery" href="#"><span class="material-symbols-outlined text-[22px]">shopping_bag</span><span class="font-label-sm text-label-sm">Home</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="categories" href="#"><span class="material-symbols-outlined text-[22px]">grid_view</span><span class="font-label-sm text-label-sm">Categories</span></a><a class="relative flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="live-deals" href="#"><span class="material-symbols-outlined text-[22px]">local_fire_department</span><span class="absolute top-1 right-4 w-2 h-2 rounded-full bg-tertiary ring-1 ring-surface"></span><span class="font-label-sm text-label-sm">Deals</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="deal-search" href="#"><span class="material-symbols-outlined text-[22px]">search</span><span class="font-label-sm text-label-sm">Search</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="saved-profile" href="#"><span class="material-symbols-outlined text-[22px]">favorite</span><span class="font-label-sm text-label-sm">Saved</span></a></div></nav><script>
+</script><div class="mt-auto px-margin py-space-md text-center"><p class="font-body-sm text-body-sm text-on-surface-variant opacity-75">As an Amazon Associate, ADMUS earns from qualifying purchases. Product prices and availability are provided by Amazon and can change.</p></div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]" data-active-classes="text-primary font-label-lg"><div class="flex justify-around items-center h-16 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center w-16 h-12 transition-colors gap-0.5 text-primary font-label-lg" data-path="home-discovery" href="#"><span class="material-symbols-outlined text-[22px]">shopping_bag</span><span class="font-label-sm text-label-sm">Home</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="categories" href="#"><span class="material-symbols-outlined text-[22px]">grid_view</span><span class="font-label-sm text-label-sm">Categories</span></a><a class="relative flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="live-deals" href="#"><span class="material-symbols-outlined text-[22px]">local_fire_department</span><span class="absolute top-1 right-4 w-2 h-2 rounded-full bg-tertiary ring-1 ring-surface"></span><span class="font-label-sm text-label-sm">Deals</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="deal-search" href="#"><span class="material-symbols-outlined text-[22px]">search</span><span class="font-label-sm text-label-sm">Search</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="saved-profile" href="#"><span class="material-symbols-outlined text-[22px]">favorite</span><span class="font-label-sm text-label-sm">Saved</span></a></div></nav><script>
 (function(){
-const API="/api/amazon";
-let items=[], query="", page=1, maxPrice="";
+const TAG="smartpick210f-20";
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const esc=x=>String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-function toast(t){let x=$("#admus-toast");if(!x){x=document.createElement("div");x.id="admus-toast";x.style.cssText="position:fixed;z-index:99999;bottom:90px;left:50%;transform:translateX(-50%);background:#151a2a;color:#fff;padding:11px 16px;border-radius:999px;font:700 13px system-ui;max-width:90%;text-align:center";document.body.append(x)}x.textContent=t;clearTimeout(window.__toast);window.__toast=setTimeout(()=>x.remove(),2600)}
-function modal(title,body){$("#admus-modal")?.remove();let m=document.createElement("div");m.id="admus-modal";m.style.cssText="position:fixed;inset:0;background:#0008;z-index:99998;display:grid;place-items:end center";m.innerHTML='<div style="background:#fff;width:min(720px,100%);max-height:90vh;overflow:auto;border-radius:24px 24px 0 0;padding:22px;color:#141b2b"><button id="mx" style="float:right;border:0;border-radius:50%;width:36px;height:36px">✕</button><h2 style="font:800 21px system-ui;margin:0 0 14px">'+esc(title)+'</h2><div>'+body+'</div></div>';document.body.append(m);$("#mx",m).onclick=()=>m.remove();m.onclick=e=>e.target===m&&m.remove()}
-async function search(q,opt={}){query=(q||query||"popular products").trim();if(opt.reset!==false){page=1;items=[]}if(opt.maxPrice!==undefined)maxPrice=opt.maxPrice||"";const p=new URLSearchParams({q:query,page:String(page)});if(maxPrice)p.set("maxPrice",maxPrice);if(opt.minRating)p.set("minRating",opt.minRating);if(opt.sort)p.set("sort",opt.sort);toast("Loading Amazon products…");try{const r=await fetch(API+"?"+p),d=await r.json();if(!r.ok||d.error)throw Error(d.error||"Amazon backend error");items=opt.append?items.concat(d.items||[]):(d.items||[]);render(d,query);toast(items.length+" Amazon products loaded")}catch(e){toast(e.message||"Request failed")}}
-function render(d,title){let old=$("#admus-live-results");old?.remove();let s=document.createElement("section");s.id="admus-live-results";s.className="px-margin";s.style.marginTop="16px";s.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div><h3 style="font:800 20px system-ui;margin:0">'+esc(title)+'</h3><small style="color:#8d7165">Live Amazon.in catalog results</small></div><button id="rc" style="border:0;background:none;color:#9f3d00;font-weight:700">Clear</button></div><div id="rg" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px"></div><div id="morewrap" style="margin-top:14px"></div>';const main=$("main");main.insertBefore(s,main.lastElementChild);$("#rc").onclick=()=>s.remove();const g=$("#rg");if(!items.length){g.innerHTML='<div style="grid-column:1/-1;background:#fff;padding:24px;border-radius:16px;text-align:center">No Amazon products found.</div>';return}g.innerHTML=items.map((x,i)=>'<article style="background:#fff;border-radius:16px;padding:10px;box-shadow:0 1px 8px #0001;display:flex;flex-direction:column"><div style="height:175px;border-radius:12px;background:#f1f3ff;overflow:hidden;display:grid;place-items:center">'+(x.image?'<img src="'+esc(x.image)+'" alt="" loading="lazy" style="width:100%;height:100%;object-fit:contain">':'🛍️')+'</div><small style="margin-top:8px;color:#8d7165;font-weight:700">'+esc(x.brand||"Amazon")+'</small><b style="font:700 14px/19px system-ui;margin-top:3px">'+esc(x.title)+'</b><strong style="font:800 17px system-ui;margin-top:7px">'+esc(x.displayPrice||"Price on Amazon")+'</strong>'+(x.saving!=null?'<span style="color:#006948;font-size:12px;font-weight:700">Save '+esc(x.saving)+'%</span>':'')+'<div style="display:flex;gap:7px;margin-top:10px"><button data-i="'+i+'" style="flex:1;border:0;border-radius:9px;padding:9px;background:#f1f3ff;font-weight:700">Details</button><a href="'+esc(x.url||"#")+'" target="_blank" rel="nofollow sponsored noopener" style="flex:1;text-align:center;text-decoration:none;border-radius:9px;padding:9px;background:#9f3d00;color:white;font-weight:700">View on Amazon</a></div></article>').join("");
-$$("[data-i]",g).forEach(b=>b.onclick=()=>{const x=items[+b.dataset.i];modal("Product details",(x.image?'<img src="'+esc(x.image)+'" style="width:100%;height:260px;object-fit:contain;background:#f1f3ff;border-radius:14px">':'')+'<h3 style="font:800 18px/25px system-ui">'+esc(x.title)+'</h3><p style="font:800 22px system-ui">'+esc(x.displayPrice||"Price on Amazon")+'</p>'+(x.saving!=null?'<p>Savings: '+esc(x.saving)+'%</p>':'')+'<p style="color:#594137">ASIN: '+esc(x.asin||"")+'</p><a href="'+esc(x.url)+'" target="_blank" rel="nofollow sponsored noopener" style="display:block;text-align:center;background:#9f3d00;color:#fff;padding:12px;border-radius:10px;text-decoration:none;font-weight:800">View on Amazon.in</a>')});
-const more=$("#morewrap");if(d.total && items.length<d.total && page<10){more.innerHTML='<button id="loadmore" style="width:100%;padding:12px;border:0;border-radius:10px;background:#f1f3ff;color:#9f3d00;font-weight:800">Load more Amazon products</button>';$("#loadmore").onclick=()=>{page++;search(query,{reset:false,append:true})}}
+
+function toast(msg){
+ let x=$("#admus-toast");
+ if(!x){x=document.createElement("div");x.id="admus-toast";x.style.cssText="position:fixed;z-index:99999;bottom:90px;left:50%;transform:translateX(-50%);background:#151a2a;color:#fff;padding:11px 16px;border-radius:999px;font:700 13px system-ui;max-width:90%;text-align:center;box-shadow:0 8px 30px #0003";document.body.append(x)}
+ x.textContent=msg;clearTimeout(window.__admusToast);window.__admusToast=setTimeout(()=>x.remove(),2600);
+}
+function modal(title,body){
+ $("#admus-modal")?.remove();
+ const m=document.createElement("div");m.id="admus-modal";m.style.cssText="position:fixed;inset:0;background:#0008;z-index:99998;display:grid;place-items:end center";
+ m.innerHTML='<div style="background:#fff;width:min(720px,100%);max-height:90vh;overflow:auto;border-radius:24px 24px 0 0;padding:22px;color:#141b2b"><button id="admus-x" style="float:right;border:0;border-radius:50%;width:36px;height:36px;background:#f1f3ff">✕</button><h2 style="font:800 21px system-ui;margin:0 0 14px">'+title+'</h2><div>'+body+'</div></div>';
+ document.body.append(m);$("#admus-x",m).onclick=()=>m.remove();m.onclick=e=>{if(e.target===m)m.remove()};
+}
+function amazonUrl(q){
+ const u=new URL("https://www.amazon.in/s");u.searchParams.set("k",(q||"popular products").trim());u.searchParams.set("tag",TAG);return u.toString();
+}
+function dealsUrl(){const u=new URL("https://www.amazon.in/gp/goldbox");u.searchParams.set("tag",TAG);return u.toString();}
+function openAmazon(q){window.open(amazonUrl(q),"_blank","noopener,noreferrer");toast("Opening Amazon.in…");}
+function showSearch(q){
+ let old=$("#admus-amazon-action");old?.remove();
+ const s=document.createElement("section");s.id="admus-amazon-action";s.className="px-margin";s.style.marginTop="16px";
+ s.innerHTML='<div style="background:#fff;border-radius:18px;padding:18px;box-shadow:0 1px 10px #0001;border:1px solid #e9edff"><div style="display:flex;gap:12px;align-items:flex-start"><div style="width:44px;height:44px;border-radius:14px;background:#fff1ea;display:grid;place-items:center;color:#9f3d00"><span class="material-symbols-outlined">shopping_bag</span></div><div style="flex:1"><div style="font:800 18px system-ui">Search Amazon.in</div><div style="font:500 13px/19px system-ui;color:#594137;margin-top:3px">ADMUS opens Amazon’s live catalog so you can see current products, prices and availability directly on Amazon.</div><button id="admus-open" style="margin-top:12px;width:100%;border:0;border-radius:12px;padding:12px;background:#9f3d00;color:#fff;font-weight:800">Open Amazon.in search</button></div></div></div>';
+ $("main").insertBefore(s,$("main").lastElementChild);$("#admus-open",s).onclick=()=>openAmazon(q);
+}
+function search(q){q=(q||"").trim();if(!q){toast("Enter something to search");return}showSearch(q);}
+
+window.ADMUS_SEARCH=search;
+
+function setupSearch(){
+ const input=$('input[placeholder*="Search Amazon"]');if(!input)return;
+ let b=document.getElementById("admus-search-button");
+ if(!b){b=document.createElement("button");b.id="admus-search-button";b.type="button";b.textContent="Search";b.style.cssText="height:38px;padding:0 14px;border:0;border-radius:999px;background:#9f3d00;color:#fff;font:800 12px system-ui";input.parentElement.append(b)}
+ b.onclick=()=>search(input.value);
+ input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();e.stopImmediatePropagation();search(input.value)}},true);
+}
+function setupAmazonLinks(){
+ const cats={Mobiles:"smartphones",Laptops:"laptops",Electronics:"electronics",Audio:"headphones earbuds",Fashion:"fashion",Home:"home products",Kitchen:"kitchen appliances",Beauty:"beauty products",Gaming:"gaming",Books:"books"};
+ $$("button,a").forEach(el=>{
+   const t=(el.textContent||"").trim();if(!t)return;
+   if(["AirPods Pro","Instant Pot","Gaming Laptops","Smart Watches"].includes(t))el.onclick=e=>{e.preventDefault();openAmazon(t)};
+   if(cats[t])el.onclick=e=>{e.preventDefault();openAmazon(cats[t])};
+   if(/^Under ₹[\d,]+/.test(t)){const n=t.match(/₹([\d,]+)/)?.[1]?.replace(/,/g,"");el.onclick=e=>{e.preventDefault();openAmazon("products under ₹"+n)}}
+   if(t==="Explore Deals"||t==="Grab Deal")el.onclick=e=>{e.preventDefault();window.open(dealsUrl(),"_blank","noopener,noreferrer");toast("Opening Amazon deals…")};
+   if(t==="See all")el.onclick=e=>{e.preventDefault();openAmazon("popular products")};
+ });
+ $$('a[href="#"]').forEach(a=>{const t=(a.textContent||"").trim();if(/View on Amazon|Grab Deal/i.test(t)){const card=a.closest("article,div.w-64,div.rounded-xl")||a.parentElement;const title=card?.querySelector("h3,h4")?.textContent.trim();a.href=title?amazonUrl(title):dealsUrl();a.target="_blank";a.rel="nofollow sponsored noopener"}});
+}
+function setupFind(){
+ $$("button").forEach(b=>{if(!/Find for me/i.test(b.textContent||""))return;b.onclick=e=>{e.preventDefault();modal("Find for me",'<p style="font:500 14px/20px system-ui;color:#594137">Describe what you need and ADMUS will create an Amazon.in search.</p><textarea id="admus-find" rows="4" placeholder="Wireless earbuds under ₹2,000 with good battery life" style="width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border:1px solid #ddd;border-radius:12px"></textarea><button id="admus-find-go" style="margin-top:10px;width:100%;padding:12px;border:0;border-radius:12px;background:#9f3d00;color:#fff;font-weight:800">Search Amazon</button>')});
+ document.addEventListener("click",e=>{if(e.target?.id==="admus-find-go"){const q=$("#admus-find")?.value.trim();$("#admus-modal")?.remove();q?openAmazon(q):toast("Tell me what you need first")}});
+}
+function setupLocation(){
+ const loc=$$("button").find(b=>(b.textContent||"").includes("Select location"));if(!loc)return;
+ const saved=localStorage.getItem("admus_pincode");if(saved){const l=loc.querySelector("span:nth-child(2)");if(l)l.textContent=saved}
+ loc.onclick=e=>{e.preventDefault();modal("Delivery pincode",'<p style="font:500 14px/20px system-ui;color:#594137">Save your Amazon delivery pincode on this device.</p><input id="admus-pin" inputmode="numeric" maxlength="6" placeholder="6-digit pincode" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ddd;border-radius:12px"><button id="admus-pin-save" style="margin-top:10px;width:100%;padding:12px;border:0;border-radius:12px;background:#9f3d00;color:#fff;font-weight:800">Save pincode</button>')};
+ document.addEventListener("click",e=>{if(e.target?.id==="admus-pin-save"){const p=$("#admus-pin")?.value.trim();if(!/^\d{6}$/.test(p||"")){toast("Enter a valid 6-digit pincode");return}localStorage.setItem("admus_pincode",p);const l=loc.querySelector("span:nth-child(2)");if(l)l.textContent=p;$("#admus-modal")?.remove();toast("Pincode saved")}});
+}
+function setupVoice(){
+ const mic=$$("button").find(b=>b.querySelector(".material-symbols-outlined")?.textContent.trim()==="mic");if(!mic)return;
+ mic.onclick=e=>{e.preventDefault();const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast("Voice search is not supported in this browser");return}const r=new SR();r.lang="en-IN";r.onstart=()=>toast("Listening…");r.onresult=e=>{const q=e.results[0][0].transcript;const input=$('input[placeholder*="Search Amazon"]');if(input)input.value=q;showSearch(q)};r.onerror=()=>toast("Voice search stopped");r.start()};
+}
+function setupBarcode(){
+ const lens=$$("button").find(b=>b.querySelector(".material-symbols-outlined")?.textContent.trim()==="center_focus_weak");if(!lens)return;
+ lens.setAttribute("aria-label","Scan product barcode");
+ lens.onclick=e=>{e.preventDefault();const BD=window.BarcodeDetector;if(!BD){toast("Barcode scanning is not supported in this browser");return}const f=document.createElement("input");f.type="file";f.accept="image/*";f.onchange=async()=>{try{const bitmap=await createImageBitmap(f.files[0]);const codes=await new BD().detect(bitmap);bitmap.close?.();if(codes?.[0]?.rawValue){const v=codes[0].rawValue;const input=$('input[placeholder*="Search Amazon"]');if(input)input.value=v;showSearch(v);toast("Barcode found")}else toast("No barcode found")}catch(err){toast("Could not read that barcode image")}};f.click()};
+}
+function setupSaved(){
+ $$(".wishlist-btn").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const card=btn.closest("article,div.w-64,div.rounded-xl")||btn.parentElement;const title=card?.querySelector("h3,h4")?.textContent.trim()||"Saved product";const a=JSON.parse(localStorage.getItem("admus_saved")||"[]");const i=a.indexOf(title);if(i>=0)a.splice(i,1);else a.push(title);localStorage.setItem("admus_saved",JSON.stringify(a));const icon=btn.querySelector("span");if(icon)icon.textContent=i>=0?"favorite_border":"favorite";toast(i>=0?"Removed from Saved":"Saved on this device")});
+}
+function setupNav(){
+ $$("nav a").forEach(a=>a.onclick=e=>{e.preventDefault();const t=(a.textContent||"").trim();if(t==="Home")scrollTo({top:0,behavior:"smooth"});else if(t==="Categories")document.querySelectorAll("main section")[1]?.scrollIntoView({behavior:"smooth"});else if(t==="Deals"){window.open(dealsUrl(),"_blank","noopener,noreferrer");toast("Opening Amazon deals…")}else if(t==="Search"){$('input[placeholder*="Search Amazon"]')?.focus();scrollTo({top:0,behavior:"smooth"})}else if(t==="Saved"){const a=JSON.parse(localStorage.getItem("admus_saved")||"[]");modal("Saved products",a.length?'<p>'+a.length+" saved item(s) on this device.</p>":"<p>No saved products yet.</p>")}});
 }
 function setup(){
-const input=$('input[placeholder*="Search Amazon"]');
-if(input)input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();search(input.value)}});
-const trends=["AirPods Pro","Instant Pot","Gaming Laptops","Smart Watches"];$$("button").forEach(b=>{const t=b.textContent.trim();if(trends.includes(t))b.onclick=()=>search(t)});
-const cats={Mobiles:"smartphones",Laptops:"laptops",Electronics:"electronics",Audio:"headphones earbuds",Fashion:"fashion",Home:"home products",Kitchen:"kitchen appliances",Beauty:"beauty",Gaming:"gaming",Books:"books"};$$("button").forEach(b=>{const t=b.textContent.trim();if(cats[t])b.onclick=()=>search(cats[t])});
-document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b)return;const t=b.textContent.trim();
-if(t==="Explore Deals"||t==="Grab Deal"||t==="Deals"){e.preventDefault();search("Amazon deals")}
-else if(t==="See all"){e.preventDefault();search("popular products")}
-else if(/^Under ₹[\d,]+/.test(t)){e.preventDefault();search("popular products",{maxPrice:t.match(/₹([\d,]+)/)[1].replace(/,/g,"")})}
-else if(t==="Search"){e.preventDefault();input?.focus();window.scrollTo({top:0,behavior:"smooth"})}
-else if(t==="Saved"){e.preventDefault();const saved=JSON.parse(localStorage.getItem("admus_saved")||"[]");modal("Saved products",saved.length?'<p>'+saved.length+" saved item(s) on this device.</p>":'<p>No saved products yet.</p>')}
-else if(t==="Categories"){e.preventDefault();window.scrollTo({top:0,behavior:"smooth"})}
-else if(/Find for me/i.test(t)){e.preventDefault();modal("Find for me",'<input id="fq" placeholder="e.g. wireless earbuds under ₹2,000" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ddd;border-radius:10px"><button id="fg" style="margin-top:10px;width:100%;padding:12px;border:0;border-radius:10px;background:#9f3d00;color:#fff;font-weight:800">Search Amazon</button>')}
-});
-document.addEventListener("click",e=>{if(e.target.id==="fg"){const q=$("#fq").value;$("#admus-modal")?.remove();search(q||"popular products")}});
-let loc=$$("button").find(b=>b.textContent.includes("Select location"));if(loc)loc.onclick=()=>modal("Delivery pincode",'<p>Enter your Amazon delivery pincode.</p><input id="pin" inputmode="numeric" maxlength="6" placeholder="6-digit pincode" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ddd;border-radius:10px"><button id="ps" style="margin-top:10px;width:100%;padding:12px;border:0;border-radius:10px;background:#9f3d00;color:#fff;font-weight:800">Save</button>');
-document.addEventListener("click",e=>{if(e.target.id==="ps"){const p=$("#pin").value.trim();if(!/^\d{6}$/.test(p))return toast("Enter a valid 6-digit pincode");localStorage.setItem("admus_pincode",p);$("#admus-modal")?.remove();if(loc)loc.querySelector("span:nth-child(2)").textContent=p;toast("Pincode saved")}});
-let bell=$$("button").find(b=>b.querySelector(".material-symbols-outlined")?.textContent.trim()==="notifications");if(bell)bell.onclick=()=>modal("Notifications","<p>No new notifications.</p>");
-window.ADMUS_SEARCH=(q)=>search(q);
+ setupSearch();setupAmazonLinks();setupFind();setupLocation();setupVoice();setupBarcode();setupSaved();setupNav();
+ const bell=$$("button").find(b=>b.querySelector(".material-symbols-outlined")?.textContent.trim()==="notifications");if(bell)bell.onclick=()=>modal("Notifications","<p>No new ADMUS notifications.</p>");
+ const img=$("header img[alt='Profile']");if(img){img.style.cursor="pointer";img.onclick=()=>modal("ADMUS Profile",'<p>Amazon-only shopping discovery.</p><button id="admus-profile-close" style="width:100%;padding:11px;border:0;border-radius:10px;background:#9f3d00;color:#fff;font-weight:800">Close</button>');document.addEventListener("click",e=>{if(e.target?.id==="admus-profile-close")$("#admus-modal")?.remove()})}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setup);else setup();
-search("popular products");
-})();
-</script><script>
-(function(){
-const q=(s,r=document)=>r.querySelector(s), qa=(s,r=document)=>[...r.querySelectorAll(s)];
-const toast=m=>{let x=q("#admus-toast");if(x){x.textContent=m;clearTimeout(window.__t);window.__t=setTimeout(()=>x.remove(),2200)}};
-function amazonSearch(t){return "https://www.amazon.in/s?k="+encodeURIComponent(t)+"&tag=smartpick210f-20";}
-qa(".wishlist-btn").forEach(b=>{b.onclick=e=>{e.preventDefault();e.stopPropagation();let card=b.closest("article,div.rounded-xl")||b.parentElement;let title=q("h3,h4",card)?.textContent?.trim()||"Saved product";let a=JSON.parse(localStorage.getItem("admus_saved")||"[]");let i=a.indexOf(title);if(i>=0)a.splice(i,1);else a.push(title);localStorage.setItem("admus_saved",JSON.stringify(a));let s=b.querySelector("span");if(s)s.textContent=i>=0?"favorite_border":"favorite";toast(i>=0?"Removed from Saved":"Saved on this device");};});
-qa('a[href="#"]').forEach(a=>{let t=a.textContent.trim();if(/View on Amazon|Grab Deal/i.test(t)){a.href=amazonSearch(a.closest("article,div")?.querySelector("h3,h4")?.textContent?.trim()||t);a.target="_blank";a.rel="nofollow sponsored noopener";}});
-qa("header img[alt='Profile']").forEach(img=>{img.style.cursor="pointer";img.onclick=()=>{let m=document.createElement("div");m.style.cssText="position:fixed;inset:0;z-index:99997;background:#0008;display:grid;place-items:center";m.innerHTML='<div style="background:white;padding:24px;border-radius:20px;width:min(340px,90%);color:#141b2b"><h2 style="margin:0 0 10px">ADMUS Profile</h2><p>Amazon-only shopping discovery.</p><button id="pc" style="width:100%;padding:11px;border:0;border-radius:10px;background:#9f3d00;color:white;font-weight:800">Close</button></div>';document.body.append(m);q("#pc",m).onclick=()=>m.remove();};});
-qa("button").forEach(b=>{let icon=q(".material-symbols-outlined",b)?.textContent.trim();
-if(icon==="mic"){b.onclick=()=>{let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast("Voice search is not supported in this browser");return}let r=new SR();r.lang="en-IN";r.onresult=e=>{let inp=q('input[placeholder*="Search Amazon"]');if(inp){inp.value=e.results[0][0].transcript;window.ADMUS_SEARCH?.(inp.value)}};r.onerror=()=>toast("Voice search stopped");r.start();};}
-if(icon==="center_focus_weak"){b.onclick=()=>{let inp=document.createElement("input");inp.type="file";inp.accept="image/*";inp.onchange=()=>toast("Image search needs an image-search API; upload received");inp.click();};}
-});
-qa("nav a").forEach(a=>a.onclick=e=>{e.preventDefault();let t=a.textContent.trim();if(t==="Home")window.scrollTo({top:0,behavior:"smooth"});else if(t==="Categories")q("section:nth-of-type(2)")?.scrollIntoView({behavior:"smooth"});else if(t==="Deals")window.ADMUS_SEARCH?.("Amazon deals");else if(t==="Search"){q('input[placeholder*="Search Amazon"]')?.focus();window.scrollTo({top:0,behavior:"smooth"});}else if(t==="Saved"){let n=JSON.parse(localStorage.getItem("admus_saved")||"[]").length;toast(n+" saved item"+(n===1?"":"s"));}});
 })();
 </script></body></html>
