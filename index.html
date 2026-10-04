@@ -523,4 +523,18 @@ window.ADMUS_SEARCH=search;
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setup);else setup();
 })();
+</script><script>
+(function(){
+const q=(s,r=document)=>r.querySelector(s), qa=(s,r=document)=>[...r.querySelectorAll(s)];
+const toast=m=>{let x=q("#admus-toast");if(x){x.textContent=m;clearTimeout(window.__t);window.__t=setTimeout(()=>x.remove(),2200)}};
+function amazonSearch(t){return "https://www.amazon.in/s?k="+encodeURIComponent(t)+"&tag=smartpick210f-20";}
+qa(".wishlist-btn").forEach(b=>{b.onclick=e=>{e.preventDefault();e.stopPropagation();let card=b.closest("article,div.rounded-xl")||b.parentElement;let title=q("h3,h4",card)?.textContent?.trim()||"Saved product";let a=JSON.parse(localStorage.getItem("admus_saved")||"[]");let i=a.indexOf(title);if(i>=0)a.splice(i,1);else a.push(title);localStorage.setItem("admus_saved",JSON.stringify(a));let s=b.querySelector("span");if(s)s.textContent=i>=0?"favorite_border":"favorite";toast(i>=0?"Removed from Saved":"Saved on this device");};});
+qa('a[href="#"]').forEach(a=>{let t=a.textContent.trim();if(/View on Amazon|Grab Deal/i.test(t)){a.href=amazonSearch(a.closest("article,div")?.querySelector("h3,h4")?.textContent?.trim()||t);a.target="_blank";a.rel="nofollow sponsored noopener";}});
+qa("header img[alt='Profile']").forEach(img=>{img.style.cursor="pointer";img.onclick=()=>{let m=document.createElement("div");m.style.cssText="position:fixed;inset:0;z-index:99997;background:#0008;display:grid;place-items:center";m.innerHTML='<div style="background:white;padding:24px;border-radius:20px;width:min(340px,90%);color:#141b2b"><h2 style="margin:0 0 10px">ADMUS Profile</h2><p>Amazon-only shopping discovery.</p><button id="pc" style="width:100%;padding:11px;border:0;border-radius:10px;background:#9f3d00;color:white;font-weight:800">Close</button></div>';document.body.append(m);q("#pc",m).onclick=()=>m.remove();};});
+qa("button").forEach(b=>{let icon=q(".material-symbols-outlined",b)?.textContent.trim();
+if(icon==="mic"){b.onclick=()=>{let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast("Voice search is not supported in this browser");return}let r=new SR();r.lang="en-IN";r.onresult=e=>{let inp=q('input[placeholder*="Search Amazon"]');if(inp){inp.value=e.results[0][0].transcript;window.ADMUS_SEARCH?.(inp.value)}};r.onerror=()=>toast("Voice search stopped");r.start();};}
+if(icon==="center_focus_weak"){b.onclick=()=>{let inp=document.createElement("input");inp.type="file";inp.accept="image/*";inp.onchange=()=>toast("Image search needs an image-search API; upload received");inp.click();};}
+});
+qa("nav a").forEach(a=>a.onclick=e=>{e.preventDefault();let t=a.textContent.trim();if(t==="Home")window.scrollTo({top:0,behavior:"smooth"});else if(t==="Categories")q("section:nth-of-type(2)")?.scrollIntoView({behavior:"smooth"});else if(t==="Deals")window.ADMUS_SEARCH?.("Amazon deals");else if(t==="Search"){q('input[placeholder*="Search Amazon"]')?.focus();window.scrollTo({top:0,behavior:"smooth"});}else if(t==="Saved"){let n=JSON.parse(localStorage.getItem("admus_saved")||"[]").length;toast(n+" saved item"+(n===1?"":"s"));}});
+})();
 </script></body></html>
