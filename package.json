@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "admus",
+  "version": "1.0.0",
+  "description": "ADMUS Amazon shopping discovery site",
+  "dependencies": {
+    "cheerio": "1.0.0-rc.12"
+  }
+}
