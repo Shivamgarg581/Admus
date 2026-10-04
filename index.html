@@ -1,89 +1,495 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMUS — Amazon Deals & Product Finder</title>
-<meta name="description" content="Discover Amazon products, compare deals, and shop smarter.">
-<meta name="theme-color" content="#090a0d">
-<style>
-:root{--bg:#090a0d;--panel:#111318;--panel2:#171920;--line:#ffffff14;--muted:#969ba7;--text:#f7f7f2;--accent:#ffb000;--green:#55e38a;--red:#ff6b6b}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -20%,#25200f 0,#090a0d 38%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
-a{text-decoration:none;color:inherit}.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:#090a0ddd;backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.brand{font-size:25px;font-weight:950;letter-spacing:-.08em}.brand span{color:var(--accent)}
-.navlinks{display:flex;gap:8px}.navlinks a,.navbtn{padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:#ffffff08;color:#ddd;font-size:13px}
-.hero{max-width:1200px;margin:auto;padding:72px 18px 42px;display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center}.eyebrow{display:inline-block;padding:7px 11px;border:1px solid #ffb00044;background:#ffb0000e;color:#ffc34d;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.08em}.hero h1{font-size:clamp(52px,8vw,104px);line-height:.88;letter-spacing:-.08em;margin:18px 0}.hero h1 span{color:var(--accent)}.hero p{color:var(--muted);font-size:17px;line-height:1.55;max-width:680px}.search{display:flex;gap:9px;margin-top:24px;max-width:680px}.search input{min-width:0;flex:1;border:1px solid var(--line);background:#ffffff08;color:white;border-radius:14px;padding:14px 15px;outline:none}.search button,.buy{border:0;border-radius:14px;padding:13px 18px;background:var(--accent);color:#15120a;font-weight:900;cursor:pointer}.heroCard{border:1px solid var(--line);background:linear-gradient(145deg,#17181e,#0e0f13);border-radius:28px;padding:22px;box-shadow:0 20px 80px #0008}.heroCard .big{font-size:70px}.score{display:inline-block;color:var(--green);background:#55e38a12;border:1px solid #55e38a2b;padding:6px 9px;border-radius:999px;font-size:11px;font-weight:900}.heroCard h2{font-size:29px;letter-spacing:-.05em;margin:14px 0 8px}.heroCard p{font-size:13px;margin:0}.stats{display:flex;gap:22px;margin-top:25px}.stats b{display:block;font-size:19px}.stats small{color:#777c86}
-main{max-width:1200px;margin:auto;padding:25px 18px 70px}.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:18px;margin:35px 0 17px}.sectionHead h2{font-size:clamp(34px,5vw,56px);letter-spacing:-.07em;margin:8px 0 0}.sectionHead p{color:var(--muted);margin:0}.filters{display:flex;gap:8px;overflow:auto;padding-bottom:15px}.filter{border:1px solid var(--line);background:#ffffff06;color:#aaa;border-radius:999px;padding:9px 13px;white-space:nowrap;cursor:pointer}.filter.active{background:#fff;color:#111}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{border:1px solid var(--line);background:var(--panel);border-radius:22px;overflow:hidden;transition:.2s}.card:hover{transform:translateY(-4px);border-color:#ffffff30}.thumb{height:205px;background:linear-gradient(135deg,#252833,#101117);display:grid;place-items:center;font-size:72px;position:relative}.badge{position:absolute;top:12px;left:12px;background:#ffb000;color:#17120a;padding:6px 8px;border-radius:999px;font-size:10px;font-weight:950}.body{padding:15px}.cat{font-size:10px;color:#858b96;text-transform:uppercase;letter-spacing:.1em}.body h3{margin:7px 0;font-size:17px;line-height:1.2}.price{display:flex;align-items:baseline;gap:8px;margin:11px 0}.price strong{font-size:23px}.old{text-decoration:line-through;color:#707580;font-size:12px}.deal{color:var(--green);font-size:11px;font-weight:800}.actions{display:flex;gap:7px;margin-top:13px}.buy{flex:1;text-align:center;font-size:13px}.copy{border:1px solid var(--line);background:#ffffff06;color:#ddd;border-radius:12px;padding:9px 11px;cursor:pointer}.notice{margin-top:28px;border:1px solid #ffb00022;background:#ffb00008;padding:15px 17px;border-radius:16px;color:#9ea3ad;font-size:12px;line-height:1.6}.rooms{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.room{border:1px solid var(--line);background:#ffffff05;border-radius:18px;padding:18px;cursor:pointer}.room b{font-size:18px}.room span{display:block;color:#777d87;font-size:12px;margin-top:7px}.footer{border-top:1px solid var(--line);padding:30px 18px 55px;text-align:center;color:#777c86;font-size:12px}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;background:#f4f4ef;color:#111;padding:10px 15px;border-radius:999px;font-weight:800;z-index:50;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.rooms{grid-template-columns:repeat(3,1fr)}}@media(max-width:560px){.navlinks{display:none}.hero{padding-top:48px}.search{flex-direction:column}.grid{grid-template-columns:1fr}.rooms{grid-template-columns:1fr 1fr}.hero h1{font-size:56px}}
-</style>
-</head>
-<body>
-<nav class="nav"><a class="brand" href="#">AD<span>MUS</span></a><div class="navlinks"><a href="#deals">Deals</a><a href="#categories">Categories</a><a href="#how">How it works</a></div><button class="navbtn" onclick="showNotice()">Amazon India</button></nav>
+<!DOCTYPE html>
 
-<header class="hero">
-<section>
-<span class="eyebrow">AMAZON PRODUCT DISCOVERY</span>
-<h1>SHOP <span>SMARTER.</span><br>NOT HARDER.</h1>
-<p>ADMUS is becoming an Amazon-focused product and deal finder. Search products, discover useful deals, compare value, and continue to Amazon to buy.</p>
-<div class="search"><input id="q" placeholder="Search products, e.g. earbuds under ₹1500" onkeydown="if(event.key==='Enter')searchProducts()"><button onclick="searchProducts()">Search</button></div>
-<div class="stats"><div><b>Amazon</b><small>India focused</small></div><div><b>Deal Score</b><small>value-first</small></div><div><b>1 click</b><small>to shop</small></div></div>
-</section>
-<aside class="heroCard"><span class="score">● SMART DEAL SYSTEM</span><div class="big">🛒</div><h2>One place for better Amazon finds.</h2><p>Products shown here will eventually be populated from Amazon-approved data sources. No fake stock, prices, ratings or discounts.</p></aside>
-</header>
-
-<main>
-<section id="deals">
-<div class="sectionHead"><div><span class="eyebrow">DISCOVER</span><h2>Featured products</h2></div><p id="resultText">Starter catalog</p></div>
-<div id="filters" class="filters"></div><section id="grid" class="grid"></section>
-<div class="notice"><b>Amazon Associates disclosure:</b> ADMUS is an Amazon Associate and may earn from qualifying purchases. Product prices and availability can change on Amazon. The live automated catalog will use approved Amazon data/API access rather than scraping Amazon pages.</div>
-</section>
-
-<section id="categories">
-<div class="sectionHead"><div><span class="eyebrow">EXPLORE</span><h2>Shop by category</h2></div></div>
-<div class="rooms">
-<div class="room" onclick="setCat('Electronics')"><b>🎧 Electronics</b><span>Audio, gadgets & accessories</span></div>
-<div class="room" onclick="setCat('Home')"><b>🏠 Home</b><span>Useful everyday products</span></div>
-<div class="room" onclick="setCat('Beauty')"><b>✨ Beauty</b><span>Personal care & beauty</span></div>
-<div class="room" onclick="setCat('Fashion')"><b>👕 Fashion</b><span>Clothing & accessories</span></div>
-<div class="room" onclick="setCat('Kitchen')"><b>🍳 Kitchen</b><span>Kitchen essentials</span></div>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary": "#ffffff", "surface-container-low": "#f1f3ff", "on-secondary-fixed-variant": "#173bab", "primary-fixed": "#ffdbcd", "inverse-primary": "#ffb596", "primary": "#9f3d00", "outline": "#8d7165", "surface-tint": "#a33e00", "surface-container-high": "#e1e8fd", "on-surface-variant": "#594137", "on-primary-container": "#fffbff", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#005137", "on-secondary-fixed": "#001453", "inverse-surface": "#293040", "surface-container-lowest": "#ffffff", "on-primary-fixed-variant": "#7c2e00", "tertiary": "#006948", "on-tertiary": "#ffffff", "tertiary-fixed": "#85f8c4", "on-secondary-container": "#00217a", "surface-dim": "#d3daef", "surface-variant": "#dce2f7", "on-primary-fixed": "#360f00", "on-tertiary-fixed": "#002114", "secondary": "#3755c3", "on-surface": "#141b2b", "on-error-container": "#93000a", "error": "#ba1a1a", "inverse-on-surface": "#edf0ff", "surface-bright": "#f9f9ff", "outline-variant": "#e1bfb2", "surface": "#f9f9ff", "secondary-fixed-dim": "#b8c4ff", "on-error": "#ffffff", "on-tertiary-container": "#f5fff7", "secondary-container": "#708cfd", "background": "#f9f9ff", "surface-container-highest": "#dce2f7", "primary-container": "#c74e00", "on-background": "#141b2b", "tertiary-fixed-dim": "#68dba9", "primary-fixed-dim": "#ffb596", "surface-container": "#e9edff", "tertiary-container": "#00855d", "error-container": "#ffdad6", "secondary-fixed": "#dde1ff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-md": "1rem", "margin-tablet": "2rem", "margin-desktop": "3rem", "space-xl": "2rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem", "space-lg": "1.5rem", "gutter": "1rem", "margin": "1rem" }, fontFamily: { "headline-lg-mobile": ["Plus Jakarta Sans"], "currency-hero": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "currency-regular": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"] }, fontSize: { "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "currency-hero": ["26px", { "lineHeight": "30px", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" }], "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "title-md": ["16px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "currency-regular": ["18px", { "lineHeight": "22px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="ADMUS Modern Shopping Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UTCL-0dDiKdO_GO9pEXhoNUqQiyD9r4f7p1SY735h8FJ2W3wfYPoUQr0ot3hciur92FvfLZfRX4DwTW6r5oBQH5_6As_l9AWRZwaHi2mdHbczyBr5xbTz8wKmJkcLB-xTbvb-tVAP7A2q7KJrBI-DGue3TPw78cnOZIlIfMKUsI00ZpGkKRXKq2QAgiMCS7QTkYHe1VVzCDoMGhj6iTsYJkKFY8p0hbMjBEAkSRa9-p_fCKJnmjRX0pA"/><div class="flex flex-col"><span class="font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider">ADMUS</span><span class="font-label-sm text-label-sm text-on-surface-variant line-clamp-1">Home Discovery</span></div></div><button class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high/60 text-on-surface min-h-[44px] touch-manipulation"><span class="material-symbols-outlined text-primary text-[18px]">location_on</span><span class="font-label-sm text-label-sm font-semibold truncate max-w-[110px]">Select location</span><span class="material-symbols-outlined text-on-surface-variant text-[16px]">keyboard_arrow_down</span></button><div class="flex items-center gap-space-xs"><button class="relative flex items-center justify-center w-11 h-11 rounded-full hover:bg-surface-container text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary ring-2 ring-surface"></span></button><div class="flex items-center justify-center w-11 h-11"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAck8No52YCPcqPMojBWzr1ktpIMFvEPw1IPlPEeb-6AN4GYrDSeGE8s8MAYWNlsseYaFUzEgIhcw-F_x58ymi1yycwiL5U_lbsKv4Y-eBJlWBazZdoQwmUO_VBX2Pcv3iYSD7gcqZ6aF2sG7u5smwQ6oPOwsu7USedJT4KHXYtwksEjReUcTGdp6IUQlQe_MK1P3kD46DcVqRHCAVajzBS9F5aS41pOXHiSeWqkjmhxp7xyLrikl0I"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full gap-space-lg">
+<!-- 1. Search Bar & Visual/Voice Utility -->
+<section class="px-margin flex flex-col gap-space-sm pt-space-xs">
+<div class="relative flex items-center w-full h-12 rounded-full bg-surface-container-lowest shadow-sm">
+<span class="material-symbols-outlined text-outline ml-space-md text-[20px] pointer-events-none">search</span>
+<input class="w-full h-full bg-transparent px-space-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none" placeholder="Search Amazon.in products, deals, ASINs..." type="text"/>
+<div class="flex items-center gap-1 mr-2">
+<button aria-label="Voice Search" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+<button aria-label="Visual Lens Search" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]">center_focus_weak</span>
+</button>
+</div>
+</div>
+<!-- Micro Suggestion Chips -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider shrink-0 mr-1">Trending:</span>
+<button class="shrink-0 px-3 py-1 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm active:scale-95 transition-all">AirPods Pro</button>
+<button class="shrink-0 px-3 py-1 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm active:scale-95 transition-all">Instant Pot</button>
+<button class="shrink-0 px-3 py-1 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm active:scale-95 transition-all">Gaming Laptops</button>
+<button class="shrink-0 px-3 py-1 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm active:scale-95 transition-all">Smart Watches</button>
 </div>
 </section>
-
-<section id="how">
-<div class="sectionHead"><div><span class="eyebrow">HOW IT WORKS</span><h2>From search to Amazon.</h2></div></div>
-<div class="notice">1. Find an eligible product → 2. ADMUS analyzes permitted product/price data → 3. We show useful information and a deal score → 4. You click <b>Buy on Amazon</b> → 5. Amazon handles checkout.</div>
+<!-- 2. Circular Category Carousel -->
+<section class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-md overflow-x-auto no-scrollbar px-margin">
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">smartphone</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Mobiles</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">laptop_mac</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Laptops</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">devices_other</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Electronics</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">headphones</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Audio</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">styler</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Fashion</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">weekend</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">skillet</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Kitchen</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">spa</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Beauty</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">sports_esports</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Gaming</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">menu_book</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Books</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 shrink-0 group">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary group-hover:bg-primary-fixed group-active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]">apps</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">More</span>
+</button>
+</div>
 </section>
-</main>
-
-<footer class="footer">ADMUS · Amazon product discovery · As an Amazon Associate I earn from qualifying purchases.</footer>
-<div id="toast" class="toast"></div>
-
+<!-- 3. Hero Promotional Banner -->
+<section class="px-margin">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary-fixed via-surface-container-low to-secondary-fixed p-space-md shadow-sm">
+<div class="flex flex-col max-w-[62%] relative z-10 gap-space-xs">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm w-fit font-bold shadow-xs">
+<span class="material-symbols-outlined text-[14px]">bolt</span> Smart shopping
+        </span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-extrabold tracking-tight">Smart finds. Better prices.</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Discover useful products, compare value, and continue to Amazon.in</p>
+<button class="mt-space-xs inline-flex items-center gap-1 px-space-md py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-md hover:bg-primary-container active:scale-95 transition-all w-fit">
+<span>Explore Deals</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Merchandised Product Preview Cluster -->
+<div class="absolute -right-3 -bottom-2 w-[44%] h-[115%] flex items-end justify-center pointer-events-none">
+<img class="w-full h-full object-contain drop-shadow-md" data-alt="Editorial consumer electronics hero cluster showcasing a sleek smartphone, modern smartwatch with silicone band, and active noise canceling earbuds floating together, vibrant clean Indian e-commerce catalog aesthetic, soft warm ambient lighting, highly detailed commercial product render" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD27strBhVeB0tjVdUmXqUr8cCVAGkx9CV5UR1lIH3FQpY3TbYltho4lAQkVjl6EOJTtWyK2MI4yKL2tCxcKPh4mKc0lF8oRhJWf5Ad4njrAG_jb-i3nQSPHRNTbM8-tTGy_3ds40j3SEq2qK9mBVQnf3DNM-91HOw7ZikGjiGF30bprvpmrZ-vu-0s2u2AP38tJ69bDnR0ih1T-SnyLvF1r47IPnrQ7Zh1NdWkII8VdPktqgyqYtuD"/>
+</div>
+</div>
+</section>
+<!-- 4. AI Shopping Assistant Chip -->
+<section class="px-margin">
+<button class="w-full flex items-center justify-between p-3 px-space-md rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface shadow-xs active:scale-[0.99] transition-all">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0">
+<span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+</div>
+<div class="flex flex-col text-left truncate">
+<span class="font-label-sm text-label-sm text-primary font-bold">Ask ADMUS AI</span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">"Best wireless earbuds under ₹2,000?"</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px] shrink-0 ml-2">arrow_forward_ios</span>
+</button>
+</section>
+<!-- 5. Trending Now (Horizontal scrolling cards) -->
+<section class="flex flex-col gap-space-sm">
+<div class="px-margin flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[22px]">trending_up</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Trending Now</h3>
+</div>
+<a class="font-label-sm text-label-sm text-primary font-bold hover:underline flex items-center" href="#">
+        See all <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+<div class="flex gap-space-md overflow-x-auto no-scrollbar px-margin pb-1">
+<!-- Trending Card 1 -->
+<div class="w-64 shrink-0 rounded-xl bg-surface-container-lowest p-space-sm shadow-sm flex flex-col justify-between">
+<div class="relative w-full aspect-square rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="OnePlus Nord CE4 smartphone in pristine modern celadon marble finish, front and back studio catalog shot on pure white backdrop, professional mobile photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCpEy9xSP4fCUbTT8rQQ22xJPlit8fRTZI7ICvhcIsjrSgi8xFjggFaOvaT7LqvsYvwbWp3bQ7G_zqKawfk_XRDQJxSR5rhmVOMJTNzq2NigpVSpjvAspf8mAqF-TAzCkm90gBYuH-fdzhwf2Xp_fGGY9hxzL3ZsTe8uRdlt9kAY2fuTFiBNr0Fp1NziGfWG4EqikRIdVWmIXWdaRjJp3mFwLfiTsaGpWRKoHMuVHNs2IR3K-avzCQ"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-bold shadow-xs">
+            -20%
+          </span>
+<button class="wishlist-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-xs flex items-center justify-center text-on-surface-variant active:scale-125 transition-transform" onclick="this.classList.toggle('text-error'); this.querySelector('span').innerText = this.querySelector('span').innerText === 'favorite' ? 'favorite_border' : 'favorite';" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+            Lowest in 30 Days
+          </span>
+</div>
+<div class="flex flex-col gap-1 mt-2.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase">OnePlus</span>
+<div class="flex items-center text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-0.5">star</span>
+<span class="font-bold">4.3</span>
+<span class="text-on-surface-variant font-normal ml-0.5">(12.4k)</span>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface line-clamp-2">OnePlus Nord CE4 (8GB RAM, 128GB Storage)</h4>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-currency-hero text-currency-hero text-on-surface">₹19,999</span>
+<span class="font-body-sm text-body-sm text-outline line-through">₹24,999</span>
+</div>
+<a class="mt-2 w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-container text-on-surface font-label-md text-label-md font-bold flex items-center justify-center gap-1 active:scale-95 transition-all" href="#">
+<span>View on Amazon</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</div>
+</div>
+<!-- Trending Card 2 -->
+<div class="w-64 shrink-0 rounded-xl bg-surface-container-lowest p-space-sm shadow-sm flex flex-col justify-between">
+<div class="relative w-full aspect-square rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Sony WH-1000XM5 wireless active noise cancelling headphones in silver cream finish, sleek consumer audio studio photography, soft rim light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr41eKy7_b5-WwGkHWtL0HutjtriYTA7KPJe7w1DF9SfTwyRa8w3NPk7EWNEzepC8N7sLvplj-8p1Y7BUTNyB8tvrpK5rkTQLa0WxofWKDNQK6FNtvfVvs1hC9b0_qHU7ECeUV-0WHE1MX8wy8rTAV1HDfYpJurdQ_tguT2_Hyp2BqgXPFEzPS7eFpss0JnUDR8zUbAbJqWDN3J975cXtf3PKB1Zv5eTLmR2VCHb77p-Ith1TDXaPp"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-bold shadow-xs">
+            -26%
+          </span>
+<button class="wishlist-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-xs flex items-center justify-center text-on-surface-variant active:scale-125 transition-transform" onclick="this.classList.toggle('text-error'); this.querySelector('span').innerText = this.querySelector('span').innerText === 'favorite' ? 'favorite_border' : 'favorite';" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-tertiary text-on-tertiary font-label-sm text-label-sm font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">trending_down</span> Lowest Price
+          </span>
+</div>
+<div class="flex flex-col gap-1 mt-2.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase">Sony</span>
+<div class="flex items-center text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-0.5">star</span>
+<span class="font-bold">4.6</span>
+<span class="text-on-surface-variant font-normal ml-0.5">(8.1k)</span>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface line-clamp-2">Sony WH-1000XM5 ANC Wireless Premium Headphones</h4>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-currency-hero text-currency-hero text-on-surface">₹25,990</span>
+<span class="font-body-sm text-body-sm text-outline line-through">₹34,990</span>
+</div>
+<a class="mt-2 w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-container text-on-surface font-label-md text-label-md font-bold flex items-center justify-center gap-1 active:scale-95 transition-all" href="#">
+<span>View on Amazon</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</div>
+</div>
+<!-- Trending Card 3 -->
+<div class="w-64 shrink-0 rounded-xl bg-surface-container-lowest p-space-sm shadow-sm flex flex-col justify-between">
+<div class="relative w-full aspect-square rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Apple Watch SE 2nd Generation 40mm GPS starlight aluminum case with sport band, pristine white background commercial packshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQqffRuaQMOMNUyUZO5S0rh-pNzZvrp5YbeazcCx2hWRBal8QpyhZEyjbCQulwFUUzgksGkWFzHT5BehTTC3sX4dxNdPt00ynlnYPbQ1eHfKln4Hz8aLBHnFXml3uJzg-TnpwhcTGJ9f0uB1vBeWzcm-w-LIaL0hne8EAt1a0Mw-yceW3wWs8g8-faDNDnT8ER77DaxWw-cSvOHewPCVUqH5FPG7bTFwlfgxnGKwoKWmy4bKWIIy9g"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-bold shadow-xs">
+            -17%
+          </span>
+<button class="wishlist-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-xs flex items-center justify-center text-on-surface-variant active:scale-125 transition-transform" onclick="this.classList.toggle('text-error'); this.querySelector('span').innerText = this.querySelector('span').innerText === 'favorite' ? 'favorite_border' : 'favorite';" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">
+            Good Deal
+          </span>
+</div>
+<div class="flex flex-col gap-1 mt-2.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase">Apple</span>
+<div class="flex items-center text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-0.5">star</span>
+<span class="font-bold">4.5</span>
+<span class="text-on-surface-variant font-normal ml-0.5">(4.2k)</span>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface line-clamp-2">Apple Watch SE (2nd Gen) GPS 40mm Smartwatch</h4>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-currency-hero text-currency-hero text-on-surface">₹24,900</span>
+<span class="font-body-sm text-body-sm text-outline line-through">₹29,900</span>
+</div>
+<a class="mt-2 w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-container text-on-surface font-label-md text-label-md font-bold flex items-center justify-center gap-1 active:scale-95 transition-all" href="#">
+<span>View on Amazon</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Best Deals Today (2-column responsive grid) -->
+<section class="px-margin flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[22px]">local_fire_department</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Best Deals Today</h3>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">Amazon data</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- 2-col Card 1 -->
+<div class="rounded-xl bg-surface-container-lowest p-space-sm shadow-sm flex flex-col justify-between">
+<div>
+<div class="relative w-full aspect-square rounded-lg bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="boAt Airdopes 141 ANC true wireless earbuds inside charging case with modern matte metallic black surface, studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmML19ST53eV_WzMfE_ZDc_0ZoxeGwwNjy2XCrZiHo2HckGwoP3E9qr8yvd-EtJYIp8zbYijrjJATGh6cqcWQf8e4FAljNP8q881XBBjU6TmFF9b5daSPuq5M0pz3yl_rFTNzY2TUVMIMJLbebpBd_4GXWDrNr2LanPRl0EqarywVhkqTVRrDXTJZv3egNJIM9SFM_im7udgRYqV6J2A4rxrXGYdPdFS-gNkLwRmlpNIXzwbANAewb"/>
+<span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-bold">
+              -71%
+            </span>
+<button class="wishlist-btn absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-surface-container-lowest/80 backdrop-blur-xs flex items-center justify-center text-on-surface-variant active:scale-125 transition-transform" onclick="this.classList.toggle('text-error'); this.querySelector('span').innerText = this.querySelector('span').innerText === 'favorite' ? 'favorite_border' : 'favorite';" type="button">
+<span class="material-symbols-outlined text-[16px]">favorite_border</span>
+</button>
+</div>
+<div class="flex items-center gap-1 mt-2">
+<span class="px-1.5 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold text-[10px]">
+              Great Deal
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold text-[10px]">
+              Prime
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase block mt-1">boAt</span>
+<h4 class="font-label-lg text-label-lg text-on-surface line-clamp-2 mt-0.5">boAt Airdopes 141 ANC TWS Earbuds</h4>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<div class="flex flex-col">
+<span class="font-currency-regular text-currency-regular text-on-surface">₹1,299</span>
+<div class="flex items-center gap-1.5">
+<span class="font-body-sm text-body-sm text-outline line-through">₹4,490</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">4.0 ★</span>
+</div>
+</div>
+<a class="w-full py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 active:scale-95 transition-all shadow-xs" href="#">
+<span>Grab Deal</span>
+<span class="material-symbols-outlined text-[13px]">arrow_outward</span>
+</a>
+</div>
+</div>
+<!-- 2-col Card 2 -->
+<div class="rounded-xl bg-surface-container-lowest p-space-sm shadow-sm flex flex-col justify-between">
+<div>
+<div class="relative w-full aspect-square rounded-lg bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Philips Air Fryer HD9200 compact digital kitchen gadget in matte dark grey, studio kitchen counter photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX6wdQ2Z07FD7P2WlU9RcNcXyAKCIvZ_45AEw82TF9oIuc0xIGSZK1oSlcavas0IDYHDb3qzIWO0I1JlRYwiT9wwrPIjKUyUSlXFNyC-wumqebKLh7jCgfjhrV30UxUJ9DlJ7jQKkYRf3IuCH96WBhK3s-kUEAngEgQ040ngjoMOumjl0Uz8J3xNWbXOduhtBleQaS1_8DiR_ARF9cGDUV2edMIdv1whEzUnn3xhEKQWfU7y-6axeS"/>
+<span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-bold">
+              -45%
+            </span>
+<button class="wishlist-btn absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-surface-container-lowest/80 backdrop-blur-xs flex items-center justify-center text-on-surface-variant active:scale-125 transition-transform" onclick="this.classList.toggle('text-error'); this.querySelector('span').innerText = this.querySelector('span').innerText === 'favorite' ? 'favorite_border' : 'favorite';" type="button">
+<span class="material-symbols-outlined text-[16px]">favorite_border</span>
+</button>
+</div>
+<div class="flex items-center gap-1 mt-2">
+<span class="px-1.5 py-0.5 rounded bg-tertiary text-on-tertiary font-label-sm text-label-sm font-bold text-[10px]">
+              Lowest Price
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold text-[10px]">
+              Prime
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase block mt-1">Philips</span>
+<h4 class="font-label-lg text-label-lg text-on-surface line-clamp-2 mt-0.5">Philips Air Fryer HD9200 (4.1 Liter)</h4>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<div class="flex flex-col">
+<span class="font-currency-regular text-currency-regular text-on-surface">₹5,499</span>
+<div class="flex items-center gap-1.5">
+<span class="font-body-sm text-body-sm text-outline line-through">₹9,995</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">4.4 ★</span>
+</div>
+</div>
+<a class="w-full py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 active:scale-95 transition-all shadow-xs" href="#">
+<span>Grab Deal</span>
+<span class="material-symbols-outlined text-[13px]">arrow_outward</span>
+</a>
+</div>
+</div>
+<!-- 2-col Card 3 -->
+<div class="rounded-xl bg-surface-container-lowest p-space-sm shadow-sm flex flex-col justify-between">
+<div>
+<div class="relative w-full aspect-square rounded-lg bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Logitech MX Master 3S ergonomic wireless graphite computer mouse, angled product shot on sleek desk backdrop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRpq8zFnuEvhfGg17jM4BfneqdE-yGYv0XzP2R1acPR51kSjOIpHwtX3LLbE5lFFDTbq-n9SZdSYQegctiwpQthx7XtvrupSMG5dp0aIvKOYHUfEa_y9nrwIMuldLCMIjVAX3arYfLPNNKRYLdKwSgqJSaFyWmz5-XS5qh8dvbOtVvk1q1yyAdG5O5MeffQ26fVT_Q_s-vJJG20iu5bQ9-LCli9IS80zkMFwHyIOQ029LRgdd4_B6p"/>
+<span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-bold">
+              -23%
+            </span>
+<button class="wishlist-btn absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-surface-container-lowest/80 backdrop-blur-xs flex items-center justify-center text-on-surface-variant active:scale-125 transition-transform" onclick="this.classList.toggle('text-error'); this.querySelector('span').innerText = this.querySelector('span').innerText === 'favorite' ? 'favorite_border' : 'favorite';" type="button">
+<span class="material-symbols-outlined text-[16px]">favorite_border</span>
+</button>
+</div>
+<div class="flex items-center gap-1 mt-2">
+<span class="px-1.5 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold text-[10px]">
+              Great Deal
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold text-[10px]">
+              Prime
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase block mt-1">Logitech</span>
+<h4 class="font-label-lg text-label-lg text-on-surface line-clamp-2 mt-0.5">Logitech MX Master 3S Performance Mouse</h4>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<div class="flex flex-col">
+<span class="font-currency-regular text-currency-regular text-on-surface">₹8,495</span>
+<div class="flex items-center gap-1.5">
+<span class="font-body-sm text-body-sm text-outline line-through">₹10,995</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">4.7 ★</span>
+</div>
+</div>
+<a class="w-full py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 active:scale-95 transition-all shadow-xs" href="#">
+<span>Grab Deal</span>
+<span class="material-symbols-outlined text-[13px]">arrow_outward</span>
+</a>
+</div>
+</div>
+<!-- 2-col Card 4 -->
+<div class="rounded-xl bg-surface-container-lowest p-space-sm shadow-sm flex flex-col justify-between">
+<div>
+<div class="relative w-full aspect-square rounded-lg bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Samsonite hard shell cabin spinner luggage trolley bag in metallic teal finish, clean travel product catalog photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4OPNxoIPLgzfQIi6KVp7qsQQVkMGv-n9740ECESV5lvghYF-XLlYG0vPGlCDaShA527coFKigXAquyA9uOJsrBXbJ4NjahXtBEy1tARomypEAxO3KF9yQethz7LzWMj1khAJr7XWYe727PdrrUB5jv0WaT62GwHtPa0mNlIvrQrZJdH187kgDaR48sxUkqwezJ3hfyRWEAnmHp6fO_0AyYmt0JiqxGwhuLAxyjTXnNErdGp0WkZzK"/>
+<span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-bold">
+              -47%
+            </span>
+<button class="wishlist-btn absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-surface-container-lowest/80 backdrop-blur-xs flex items-center justify-center text-on-surface-variant active:scale-125 transition-transform" onclick="this.classList.toggle('text-error'); this.querySelector('span').innerText = this.querySelector('span').innerText === 'favorite' ? 'favorite_border' : 'favorite';" type="button">
+<span class="material-symbols-outlined text-[16px]">favorite_border</span>
+</button>
+</div>
+<div class="flex items-center gap-1 mt-2">
+<span class="px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold text-[10px]">
+              Good Deal
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold text-[10px]">
+              Prime
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase block mt-1">Samsonite</span>
+<h4 class="font-label-lg text-label-lg text-on-surface line-clamp-2 mt-0.5">Samsonite Spinner Luggage 55cm Cabin</h4>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<div class="flex flex-col">
+<span class="font-currency-regular text-currency-regular text-on-surface">₹6,890</span>
+<div class="flex items-center gap-1.5">
+<span class="font-body-sm text-body-sm text-outline line-through">₹13,000</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">4.3 ★</span>
+</div>
+</div>
+<a class="w-full py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 active:scale-95 transition-all shadow-xs" href="#">
+<span>Grab Deal</span>
+<span class="material-symbols-outlined text-[13px]">arrow_outward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Smart Shopping: Find for Me -->
+<section class="px-margin flex flex-col gap-space-sm">
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-space-md shadow-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</div>
+<div class="flex-1">
+<span class="font-label-md text-label-md text-primary font-bold">FIND FOR ME</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Tell ADMUS what you need.</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-relaxed">Example: “Wireless earbuds under ₹2,000 with ANC and good battery life.”</p>
+<button type="button" onclick="window.location.hash='find-for-me'" class="mt-3 inline-flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg active:scale-95 transition-all">
+<span>Find for me</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. Budget Price Hub Quick Access -->
+<section class="px-margin flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[20px]">account_balance_wallet</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Shop by Budget</h3>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface active:scale-[0.98] transition-all">
+<div class="flex flex-col text-left">
+<span class="font-label-lg text-label-lg font-bold">Under ₹500</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Daily essentials &amp; tech</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest font-label-sm text-label-sm font-bold text-primary">Explore</span>
+</button>
+<button class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface active:scale-[0.98] transition-all">
+<div class="flex flex-col text-left">
+<span class="font-label-lg text-label-lg font-bold">Under ₹1,000</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Audio, home &amp; tools</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest font-label-sm text-label-sm font-bold text-primary">Explore</span>
+</button>
+<button class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface active:scale-[0.98] transition-all">
+<div class="flex flex-col text-left">
+<span class="font-label-lg text-label-lg font-bold">Under ₹2,000</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Watches &amp; appliances</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest font-label-sm text-label-sm font-bold text-primary">Explore</span>
+</button>
+<button class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface active:scale-[0.98] transition-all">
+<div class="flex flex-col text-left">
+<span class="font-label-lg text-label-lg font-bold">Under ₹5,000</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Smart gadgets &amp; wear</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest font-label-sm text-label-sm font-bold text-primary">Explore</span>
+</button>
+</div>
+</section>
+<!-- 8. Trust & Amazon Associates note -->
+<section class="px-margin mb-space-sm">
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px] shrink-0 mt-0.5">verified_user</span>
+<div class="flex flex-col gap-1">
+<span class="font-label-md text-label-md text-on-surface font-bold">Verified Amazon India Associate Partner</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          ADMUS may analyze permitted Amazon product and price data. Prices and availability can change on Amazon.in. As an Amazon Associate, ADMUS earns from qualifying purchases at no additional cost to you.
+        </p>
+</div>
+</div>
+</section>
+</div>
 <script>
-const ASSOCIATE_TAG='smartpick210f-20';
-const products=[
- {title:'Wireless Earbuds',cat:'Electronics',icon:'🎧',price:'—',old:'',deal:'Ready for live Amazon data',asin:''},
- {title:'9W LED Bulb',cat:'Home',icon:'💡',price:'—',old:'',deal:'Ready for live Amazon data',asin:''},
- {title:'Kitchen Storage Set',cat:'Kitchen',icon:'🍱',price:'—',old:'',deal:'Ready for live Amazon data',asin:''},
- {title:'Everyday Backpack',cat:'Fashion',icon:'🎒',price:'—',old:'',deal:'Ready for live Amazon data',asin:''},
- {title:'Personal Care Essential',cat:'Beauty',icon:'✨',price:'—',old:'',deal:'Ready for live Amazon data',asin:''},
- {title:'USB-C Charger',cat:'Electronics',icon:'🔌',price:'—',old:'',deal:'Ready for live Amazon data',asin:''},
- {title:'Desk Organizer',cat:'Home',icon:'🗂️',price:'—',old:'',deal:'Ready for live Amazon data',asin:''},
- {title:'Cookware Essential',cat:'Kitchen',icon:'🍳',price:'—',old:'',deal:'Ready for live Amazon data',asin:''}
-];
-const cats=['All','Electronics','Home','Kitchen','Beauty','Fashion'];let active='All';
-function amazonUrl(asin){return asin?'https://www.amazon.in/dp/'+encodeURIComponent(asin)+'/?tag='+ASSOCIATE_TAG:'#'}
-function setCat(c){active=c;render();document.getElementById('deals').scrollIntoView({behavior:'smooth'})}
-function render(){
- const f=document.getElementById('filters');f.innerHTML=cats.map(c=>'<button class="filter '+(c===active?'active':'')+'" onclick="setCat(\''+c+'\')">'+c+'</button>').join('');
- const list=active==='All'?products:products.filter(p=>p.cat===active);
- document.getElementById('resultText').textContent=list.length+' categories/products in starter catalog';
- document.getElementById('grid').innerHTML=list.map(p=>'<article class="card"><div class="thumb"><span class="badge">AMAZON</span>'+p.icon+'</div><div class="body"><div class="cat">'+p.cat+'</div><h3>'+escapeHtml(p.title)+'</h3><div class="price"><strong>'+p.price+'</strong>'+ (p.old?'<span class="old">'+p.old+'</span>':'')+'</div><div class="deal">✓ '+escapeHtml(p.deal)+'</div><div class="actions"><a class="buy" href="'+amazonUrl(p.asin)+'" target="_blank" rel="nofollow sponsored noopener" onclick="if(!this.href||this.getAttribute(\'href\')===\'#\'){event.preventDefault();showNotice()}">Buy on Amazon</a><button class="copy" onclick="copyLink(\''+p.asin+'\')">↗</button></div></div></article>').join('');
-}
-function searchProducts(){const q=document.getElementById('q').value.trim().toLowerCase();if(!q){setCat('All');return}const list=products.filter(p=>(p.title+' '+p.cat).toLowerCase().includes(q));document.getElementById('resultText').textContent=list.length?('Found '+list.length):'No starter match — live Amazon search will be connected later';document.getElementById('grid').innerHTML=list.map(p=>card(p)).join('')||'<div class="notice" style="grid-column:1/-1">No local starter result. The next backend phase will connect Amazon-approved product search so this box can return real products.</div>'}
-function card(p){return '<article class="card"><div class="thumb"><span class="badge">AMAZON</span>'+p.icon+'</div><div class="body"><div class="cat">'+p.cat+'</div><h3>'+escapeHtml(p.title)+'</h3><div class="price"><strong>'+p.price+'</strong></div><div class="deal">✓ '+escapeHtml(p.deal)+'</div><div class="actions"><a class="buy" href="'+amazonUrl(p.asin)+'" target="_blank" rel="nofollow sponsored noopener">Buy on Amazon</a></div></div></article>'}
-function copyLink(asin){if(!asin){showNotice();return}navigator.clipboard?.writeText(amazonUrl(asin));showNotice('Affiliate link copied')}
-function showNotice(t='Live Amazon API is not connected yet.'){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1800)}
-function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-render();
-</script>
-</body>
-</html>
+  // Dynamic subtle interactions for shopping actions
+  document.querySelectorAll('.wishlist-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  });
+</script><div class="mt-auto px-margin py-space-md text-center"><p class="font-body-sm text-body-sm text-on-surface-variant opacity-75">As an Amazon Associate, ADMUS earns from qualifying purchases. Product prices &amp; availability are accurate as of date/time indicated.</p></div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]" data-active-classes="text-primary font-label-lg"><div class="flex justify-around items-center h-16 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center w-16 h-12 transition-colors gap-0.5 text-primary font-label-lg" data-path="home-discovery" href="#"><span class="material-symbols-outlined text-[22px]">shopping_bag</span><span class="font-label-sm text-label-sm">Home</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="categories" href="#"><span class="material-symbols-outlined text-[22px]">grid_view</span><span class="font-label-sm text-label-sm">Categories</span></a><a class="relative flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="live-deals" href="#"><span class="material-symbols-outlined text-[22px]">local_fire_department</span><span class="absolute top-1 right-4 w-2 h-2 rounded-full bg-tertiary ring-1 ring-surface"></span><span class="font-label-sm text-label-sm">Deals</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="deal-search" href="#"><span class="material-symbols-outlined text-[22px]">search</span><span class="font-label-sm text-label-sm">Search</span></a><a class="flex flex-col items-center justify-center w-16 h-12 text-on-surface-variant transition-colors gap-0.5" data-path="saved-profile" href="#"><span class="material-symbols-outlined text-[22px]">favorite</span><span class="font-label-sm text-label-sm">Saved</span></a></div></nav></body></html>
