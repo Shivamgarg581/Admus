@@ -95,7 +95,7 @@ async function searchAmazonHtml({keywords, page, tag, maxPrice, minPrice, brand,
   if (!res.ok) throw new Error('Amazon search returned HTTP ' + res.status);
 
   const html = await res.text();
-  const cheerio = await import('cheerio');
+  const cheerio = require('cheerio');
   const $ = cheerio.load(html);
 
   const items = [];
