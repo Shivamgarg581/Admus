@@ -496,7 +496,7 @@
 <script>
 (function(){
 const API="/api/amazon"; let items=[];
-const $=(s,r=document)=>r.querySelector(s), $=(s,r=document)=>[...r.querySelectorAll(s)];
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=x=>String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 function toast(t){let x=$("#admus-toast");if(!x){x=document.createElement("div");x.id="admus-toast";x.style.cssText="position:fixed;z-index:99999;bottom:90px;left:50%;transform:translateX(-50%);background:#151a2a;color:white;padding:11px 16px;border-radius:999px;font:700 13px system-ui;max-width:90%;text-align:center";document.body.append(x)}x.textContent=t;clearTimeout(window.__toast);window.__toast=setTimeout(()=>x.remove(),2600)}
 function modal(title,body){$("#admus-modal")?.remove();let m=document.createElement("div");m.id="admus-modal";m.style.cssText="position:fixed;inset:0;background:#0008;z-index:99998;display:grid;place-items:end center";m.innerHTML='<div style="background:white;width:min(720px,100%);max-height:90vh;overflow:auto;border-radius:24px 24px 0 0;padding:22px;color:#141b2b"><button id="mx" style="float:right;border:0;border-radius:50%;width:36px;height:36px">✕</button><h2 style="font:800 21px system-ui;margin:0 0 14px">'+esc(title)+'</h2><div>'+body+'</div></div>';document.body.append(m);$("#mx",m).onclick=()=>m.remove();m.onclick=e=>e.target===m&&m.remove()}
